@@ -80,36 +80,43 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function playGame() {
-    // play a five round game that keeps score and reports a winner or loser at the end
-    let player = 0, computer = 0;
-    for (i = 0; i < 5; i++)
-    {
-        let playerSelection = prompt("Enter your move");
-        let computerSelection = getComputerChoice();
-        let outcome = playRound(playerSelection, computerSelection)
-        console.log(outcome);
-        if (outcome === "You win!")
+let message = "";
+result = document.querySelector("#result");
+playerScore = document.querySelector("#player");
+computerScore = document.querySelector("#computer");
+btns = document.querySelectorAll("button");
+// Scores
+let player = 0;
+let computer = 0;
+btns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+        message = playRound(btn.textContent, getComputerChoice());
+        result.textContent = message;
+        // If you win, add a point to you
+        if (message === "You win!")
         {
             player++;
         }
-        else if (outcome == "You lose!")
+        // if you lose, add a point to the computer
+        else if (message === "You lose!")
         {
             computer++;
         }
-    }
-    if (player > computer)
-    {
-        console.log("The winner is the Player!")
-    }
-    else if (computer > player)
-    {
-        console.log("The winner is the Computer!")
-    }
-    else
-    {
-        console.log("The match was a draw!")
-    }
-}
-
-playGame()
+        // if you or computer gets 5 points, then declare winner and restart the game
+        if (computer === 5)
+        {
+            result.textContent = "The computer won the game";
+            computer = 0;
+            player = 0;
+        }
+        else if (player === 5)
+        {
+            result.textContent = "The player won the game";
+            computer = 0;
+            player = 0;
+        }
+        // update scoreboard
+        playerScore.textContent = player;
+        computerScore.textContent = computer;
+    });
+});
