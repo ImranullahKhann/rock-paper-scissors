@@ -88,6 +88,7 @@ btns = document.querySelectorAll("button");
 // Scores
 let player = 0;
 let computer = 0;
+
 btns.forEach((btn) => {
     btn.addEventListener("click", () => {
         message = playRound(btn.textContent, getComputerChoice());
